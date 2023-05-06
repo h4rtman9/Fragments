@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.data.Item
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentListBinding
@@ -41,15 +42,12 @@ class ListFragment : Fragment() {
             adapter.items = getData().toMutableList()
 
             adapter.setOnClickListener {
-                val f = InfoFragment()
 
-                val b = Bundle()
+                val b = Bundle()  // Отправка данных на другой фрагмент
                 b.putString("name", it.name)
                 b.putString("text", it.text)
 
-                f.arguments = b
-
-                (context as MainActivity).openFragment(f)
+                findNavController().navigate(R.id.action_listFragment_to_infoFragment, b)
             }
         }
     }

@@ -29,7 +29,6 @@ class InfoFragment : Fragment() {
         arguments?.let {
             binding.textViewName.text = it.getString("name")
             binding.textViewText.text = it.getString("text")
-
         }
     }
 

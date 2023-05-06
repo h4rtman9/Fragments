@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/listFragment"
+        android:title="List"
+        android:icon="@drawable/baseline_home_24"
+        />
+    <item
+        android:id="@+id/infoFragment"
+        android:title="Info"
+        android:icon="@drawable/baseline_info_24"
+        />
+
+    <item
+        android:id="@+id/detailFragment"
+        android:title="D"
+        android:icon="@drawable/baseline_horizontal_distribute_24"
+        />
+
+    <item
+        android:id="@+id/h"
+        android:title="H"
+        android:icon="@drawable/baseline_horizontal_rule_24"
+        />
+
+    <item
+        android:id="@+id/hs"
+        android:title="HS"
+        android:icon="@drawable/baseline_horizontal_split_24"
+        />
+
+
+</menu>
