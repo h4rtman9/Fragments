@@ -19,14 +19,14 @@
         />
 
     <item
-        android:id="@+id/h"
-        android:title="H"
+        android:id="@+id/photosFragment"
+        android:title="Photos"
         android:icon="@drawable/baseline_horizontal_rule_24"
         />
 
     <item
-        android:id="@+id/hs"
-        android:title="HS"
+        android:id="@+id/aboutFragment"
+        android:title="About"
         android:icon="@drawable/baseline_horizontal_split_24"
         />
 
