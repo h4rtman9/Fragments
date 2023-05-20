@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/detailFragment"
-        android:title="D"
+        android:title="Detail"
         android:icon="@drawable/baseline_horizontal_distribute_24"
         />
 

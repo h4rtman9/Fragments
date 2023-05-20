@@ -27,6 +27,7 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding = FragmentListBinding.bind(view)
 
 
@@ -38,7 +39,6 @@ class ListFragment : Fragment() {
         binding.apply {
             adapter = ListAdapter()
             recyclerView.adapter = adapter
-
             adapter.items = getData().toMutableList()
 
             adapter.setOnClickListener {
