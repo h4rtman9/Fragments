@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.detail
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,12 +96,33 @@ class DetailAdapter(private val context: Context) :
         }
 
         popBinding.textViewDelete.setOnClickListener {
-            popupWindow?.dismiss()
-            onItemDelete.invoke(pic)
-            pics.remove(pic)
-            notifyItemRemoved(position)
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Confirm")
+            builder.setMessage("You really want to delete this item?")
+            builder.setPositiveButton("Yes") { dialogInterface, i ->
+                popupWindow?.dismiss()
+                onItemDelete.invoke(pic)
+                pics.remove(pic)
+                notifyItemRemoved(position)
+            }
+            builder.setNegativeButton("No")  { dialogInterface, i ->
+                popupWindow?.dismiss()
+            }
+            builder.show()
+
         }
         popupWindow?.showAsDropDown(v)
 
     }
+//    private fun DialogConfirm(v: View, pic: Int, position: Int){
+//
+//        val builder = AlertDialog.Builder(context)
+//        builder.setTitle("Confirm")
+//        builder.setMessage("You really want to delete this item?")
+//        builder.setPositiveButton("Yes") { dialogInterface, i ->
+//
+//        }
+//        builder.setNegativeButton("No")  { dialogInterface, i -> }
+//        builder.show()
+//    }
 }
