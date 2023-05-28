@@ -1,16 +1,19 @@
 package com.example.myapplication.ui.detail
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.Item
 import com.example.myapplication.databinding.PopupMenuBinding
 import com.example.myapplication.databinding.TextRowItemBinding
 
@@ -18,7 +21,7 @@ class DetailAdapter(private val context: Context) :
     RecyclerView.Adapter<DetailAdapter.ListViewHolder>() {
 
     private var popupWindow: PopupWindow? = null
-    var pics: MutableList<Int> = mutableListOf()
+    var items: MutableList<Item> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -59,19 +62,19 @@ class DetailAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: DetailAdapter.ListViewHolder, position: Int) {
-        holder.showItems(pics[position], position)
+        holder.showItems(items[position].icon, position)
     }
 
-    override fun getItemCount(): Int = pics.size
+    override fun getItemCount(): Int = items.size
 
 
-    private var onItemChange: (i: Int) -> Unit = { i -> }
-    fun setOnItemChange(onItemChange: (i: Int) -> Unit) {
+    private var onItemChange: (i: Item, pos: Int) -> Unit = { i ,pos -> }
+    fun setOnItemChange(onItemChange: (i: Item, pos: Int) -> Unit) {
         this.onItemChange = onItemChange
     }
 
-    private var onItemDelete: (i: Int) -> Unit = { i -> }
-    fun setOnItemDelete(onItemDelete: (i: Int) -> Unit) {
+    private var onItemDelete: (i: Item, pos: Int) -> Unit = { i, pos -> }
+    fun setOnItemDelete(onItemDelete: (i: Item, pos: Int) -> Unit) {
         this.onItemDelete = onItemDelete
     }
 
@@ -89,7 +92,7 @@ class DetailAdapter(private val context: Context) :
         }
 
         popBinding.textViewCHange.setOnClickListener {
-            onItemChange.invoke(pic)
+            onItemChange.invoke(items[position], position)
             popupWindow?.dismiss()
 
 //            notifyItemChanged(position)
@@ -101,8 +104,8 @@ class DetailAdapter(private val context: Context) :
             builder.setMessage("You really want to delete this item?")
             builder.setPositiveButton("Yes") { dialogInterface, i ->
                 popupWindow?.dismiss()
-                onItemDelete.invoke(pic)
-                pics.remove(pic)
+                onItemDelete.invoke(items[position],position)
+                items.removeAt(position)
                 notifyItemRemoved(position)
             }
             builder.setNegativeButton("No")  { dialogInterface, i ->
@@ -126,3 +129,4 @@ class DetailAdapter(private val context: Context) :
 //        builder.show()
 //    }
 }
+

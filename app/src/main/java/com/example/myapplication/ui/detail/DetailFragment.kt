@@ -1,25 +1,26 @@
 package com.example.myapplication.ui.detail
 
-import android.content.Context
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-//import androidx.navigation.fragment.findNavController
+import android.view.Window
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentDetailBinding
+import com.example.myapplication.databinding.EditDialogBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.Item
 import com.example.myapplication.databinding.PopupMenuBinding
+import com.example.myapplication.databinding.TextRowItemBinding
 
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
+    private lateinit var EditBinding: EditDialogBinding
     private lateinit var adapter: DetailAdapter
-    private val list: MutableList<Int> = mutableListOf()
+    private val list: MutableList<Item> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,32 +40,49 @@ class DetailFragment : Fragment() {
         binding.apply {
             adapter = DetailAdapter(requireContext())
             recyclerViewDetail.adapter = adapter
-            adapter.pics = getData().toMutableList()
+            adapter.items = getData().toMutableList()
 
             adapter.setOnClickListener { i, v ->
-//                showMenu(v)
-//                findNavController().navigate(R.id.action_listFragment_to_infoFragment)
+//               showMenu(v)
             }
 
             adapter.setOnItemChange {
-//                list.remove(it)
-                chageItem(it)
+               i, pos ->  changeItem(i, pos)
             }
             adapter.setOnItemDelete {
-                list.remove(it)
+              i, pos ->   list.removeAt(pos)
             }
         }
     }
 
-    private fun chageItem(p: Int) {
+    private fun changeItem(p: Item, pos: Int) {
         // Show Custom Dialog
         // Save changes
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.edit_dialog)
+        dialog.show()
+        EditBinding.btnChange.setOnClickListener {
+            if (EditBinding.evName.text.toString() !=""){
+                adapter.items[pos].text = EditBinding.evName.text.toString()
+                adapter.notifyItemChanged(pos)
+            }
+        }
+
     }
 
-    private fun getData(): MutableList<Int> {
-
+    private fun getData(): List<Item> {
+        val list: MutableList<Item> = mutableListOf()
         repeat(15) {
-            list.add(R.drawable.rectangle_dog)
+            list.add(
+                Item(
+                    "0",
+                    "",
+                    0,
+                    "Description $it",
+                    icon =  R.drawable.rectangle_dog
+                )
+            )
         }
         return list
     }
